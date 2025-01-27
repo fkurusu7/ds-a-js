@@ -17,6 +17,35 @@ function factorial(n) {
 }
 ```
 
+### Recursion and Stack
+
+How does the computer accomplish such a feat as calling a function itself?
+The answer is quite simple
+==> it uses a stack behind the scene to keep track of where things are.
+For this particular problem, the factorial recursive function roughly translates to this when executed:
+
+```js
+function factorialStack(n) {
+  const stack = [];
+  // push each call to a stack
+  // Top of the stack is base case
+  while (n > 0) {
+    stack.push(n);
+    n -= 1;
+  }
+  console.log(stack); // [ 5, 4, 3, 2, 1 ]
+
+  let res = 1;
+  // pop and use return value until stack is empty
+  while (stack.length > 0) {
+    res *= stack.pop();
+  }
+  return res;
+}
+
+factorialStack(5); // 120
+```
+
 ## Think like a NODE
 
 Think from the perspective of a node _indestead_ of looking at the whole tree. This is in line with how recursion is written.
