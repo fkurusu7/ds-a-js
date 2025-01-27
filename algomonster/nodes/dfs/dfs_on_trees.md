@@ -1,5 +1,22 @@
 # DFS - Depth First Search
 
+## Recursion Review
+
+Recursion is the process of a function calling itself. Key components in writing a correct recursive function:
+
+1. **Base Case/Exit**
+1. **Recursive Call**
+
+Classic textbook example: finding the factorial of a number (5! = 5*4*3*2*1)
+
+```js
+function factorial(n) {
+  // BASE CASE
+  if (n <= 1) return 1;
+  return n * factorial(n - 1); // RECURSIVE CALL
+}
+```
+
 ## Think like a NODE
 
 Think from the perspective of a node _indestead_ of looking at the whole tree. This is in line with how recursion is written.
