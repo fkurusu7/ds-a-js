@@ -78,14 +78,20 @@ function findAnagrams(original, check) {
 
     // Compareif it's an anagram
     if (equalMaps(checkFreq, windowFreq)) {
-      console.log(i, i - check.length + 1);
       result.push(i - check.length + 1);
+      /*
+      The key points to remember:
+        1. i is always at the end of our current window
+        2. We subtract p.length to move back to the start of the window
+        3. We add 1 to adjust for 0-based indexing
+        4. This gives us the starting position of any anagram we find
+       */
     }
   }
   return result;
 }
 
 console.log(findAnagrams("cbaebabacd", "abc")); // [0, 6]
-// console.log(findAnagrams("abab", "ab")); // [0, 1, 2]
-// console.log(findAnagrams("abab", "abc")); // []
-// console.log(findAnagrams("abab", "a")); // [0, 2]
+console.log(findAnagrams("abab", "ab")); // [0, 1, 2]
+console.log(findAnagrams("abab", "abc")); // []
+console.log(findAnagrams("abab", "a")); // [0, 2]
