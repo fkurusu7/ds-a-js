@@ -51,6 +51,14 @@ const viewers = [
 ];
 
 // 1. Find any 4-hour period with exactly 3000 viewers
+/*
+ const viewers = [
+      1000, 500, 300, 200, 400, 800,    // 12 AM - 5 AM
+      2000, 500, 800, 700, 1000, 5500, // 6 AM - 11 AM
+      5000, 6000, 7000, 8000, 7500, 6500, // 12 PM - 5 PM
+      6000, 5000, 4000, 3000, 2000, 1500  // 6 PM - 11 PM
+  ];
+ */
 function findExactViewerPerPeriod(
   viewersPerHourArray,
   hoursPeriod,
@@ -135,3 +143,73 @@ console.log(findLowestViewerPeriod(viewers, 6));
 */
 
 // 3. Find periods with more than 10000 viewers
+/*
+ const viewers = [
+      1000, 500, 300, 200, 400, 800,    // 12 AM - 5 AM
+      2000, 500, 800, 700, 1000, 5500, // 6 AM - 11 AM
+      5000, 6000, 7000, 8000, 7500, 6500, // 12 PM - 5 PM
+      6000, 5000, 4000, 3000, 2000, 1500  // 6 PM - 11 PM
+  ];
+ */
+function findPeakPeriods(arr, target) {
+  let peaks = [];
+  let currentSum = 0;
+  let start = 0;
+
+  for (let i = 0; i < arr.length; i++) {
+    currentSum += arr[i];
+
+    if (currentSum >= target) {
+      peaks.push({
+        period: [start, i],
+        totalViewers: currentSum,
+        hours: arr.slice(start, i + 1),
+      });
+
+      // reset the sum and start index
+      currentSum = 0;
+      start = i + 1;
+    }
+  }
+
+  return peaks;
+}
+
+console.log("\n3. Periods with more than 10000 viewers:");
+console.log(findPeakPeriods(viewers, 10000));
+/* 
+ensalada con arrachera
+4 crujipollos 
+
+Array(6) [
+  {
+    period: [ 0, 11 ],
+    totalViewers: 13700,
+    hours: Array(12) [ 1000, 500, 300, 200, 400, 800, 2000, 500, 800, 700, 1000, 5500 ]
+  },
+  { period: [ 11, 13 ], totalViewers: 11000, hours: [ 5500, 5000, 6000 ] },
+  { period: [ 24, 15 ], totalViewers: 15000, hours: [] },
+  { period: [ 39, 17 ], totalViewers: 14000, hours: [] },
+  { period: [ 56, 19 ], totalViewers: 11000, hours: [] },
+  { period: [ 75, 23 ], totalViewers: 10500, hours: [] }
+]
+*/
+console.log("\n3. Periods with more than 30000 viewers:");
+console.log(findPeakPeriods(viewers, 30000));
+/*
+[
+  {
+    period: [ 0, 14 ],
+    totalViewers: 31700,
+    hours: Array(15) [
+      1000, 500, 300, 200, 400, 800, 2000, 500, 800, 700, 1000, 5500, 5000, 6000,
+      7000
+    ]
+  },
+  {
+    period: [ 14, 19 ],
+    totalViewers: 33000,
+    hours: Array(6) [ 7000, 8000, 7500, 6500, 6000, 5000 ]
+  }
+]
+*/
