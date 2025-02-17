@@ -44,6 +44,7 @@ function moveZerosIn(nums) {
 let nums = [1, 0, 2, 0, 0, 7];
 moveZerosIn(nums);
 console.log(nums);
+// [ 1, 2, 7, 0, 0, 0 ]
 
 function moveZerosCopyInPlace(nums) {
   let i = 0;
@@ -51,16 +52,15 @@ function moveZerosCopyInPlace(nums) {
   for (const n of nums) {
     if (n !== 0) {
       nums[i] = n;
-      console.log(i);
       i++;
     }
   }
   // fill the rest with zeros
   for (; i < nums.length; i++) {
-    console.log(i);
     nums[i] = 0;
   }
 }
 nums = [1, 0, 2, 0, 0, 7];
 moveZerosCopyInPlace(nums);
 console.log(nums);
+// Array(6) [ 1, 2, 7, 0, 0, 0 ]
