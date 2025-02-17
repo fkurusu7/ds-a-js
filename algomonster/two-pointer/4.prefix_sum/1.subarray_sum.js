@@ -57,17 +57,29 @@ console.log(prefixSumArray([1, 2, 3, 4, 5])); // ==> [0, 1, 3, 6, 10, 15]
 function suffixSum(arr, target) {
   // prefixSum 0 happens when we have an empty array
   const prefixSums = new Map([[0, 0]]);
+  console.log(prefixSums);
   let currSum = 0;
   for (let i = 0; i < arr.length; i++) {
     currSum += arr[i];
     const diff = currSum - target;
+    console.log(prefixSums, diff);
     if (prefixSums.has(diff)) {
       return [prefixSums.get(diff), i + 1];
     }
     prefixSums.set(currSum, i + 1);
     console.log(prefixSums);
+    /*
+      Map { 0: 0, 1: 1 } 
+      Map { 0: 0, 1: 1, -19: 2 } 
+      Map { 0: 0, 1: 1, -19: 2, -22: 3 }
+     */
   }
   return [];
 }
 
 console.log(suffixSum([1, -20, -3, 30, 5, 4], 7)); // ==> [1, 4]
+
+// [ Map { 0: 0 }, -6 ]
+// [ Map { 0: 0, 1: 1 }, -26 ]
+// [ Map { 0: 0, 1: 1, -19: 2 }, -29 ]
+// [ Map { 0: 0, 1: 1, -19: 2, -22: 3 }, 1 ]

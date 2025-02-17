@@ -178,9 +178,6 @@ function findPeakPeriods(arr, target) {
 console.log("\n3. Periods with more than 10000 viewers:");
 console.log(findPeakPeriods(viewers, 10000));
 /* 
-ensalada con arrachera
-4 crujipollos 
-
 Array(6) [
   {
     period: [ 0, 11 ],
