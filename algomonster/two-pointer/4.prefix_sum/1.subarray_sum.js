@@ -63,7 +63,14 @@ function suffixSum(arr, target) {
     currSum += arr[i];
     const diff = currSum - target;
     console.log(prefixSums, diff);
+    /* 
+    [ Map { 0: 0 }, -6 ] 
+    [ Map { 0: 0, 1: 1 }, -26 ] 
+    [ Map { 0: 0, 1: 1, -19: 2 }, -29 ] 
+    [ Map { 0: 0, 1: 1, -19: 2, -22: 3 }, 1 ]
+  */
     if (prefixSums.has(diff)) {
+      console.log(prefixSums);
       return [prefixSums.get(diff), i + 1];
     }
     prefixSums.set(currSum, i + 1);
@@ -83,3 +90,38 @@ console.log(suffixSum([1, -20, -3, 30, 5, 4], 7)); // ==> [1, 4]
 // [ Map { 0: 0, 1: 1 }, -26 ]
 // [ Map { 0: 0, 1: 1, -19: 2 }, -29 ]
 // [ Map { 0: 0, 1: 1, -19: 2, -22: 3 }, 1 ]
+
+/* ************************************************************************************************** */
+/* ************************************************************************************************** */
+/* ************************************************************************************************** */
+/* Find the total number of subarrays that sums up to target. */
+/* ************************************************************************************************** */
+
+function subarraySumTotal(arr, target) {
+  const prefixSums = new Map();
+  prefixSums.set(0, 1);
+  console.log(prefixSums);
+
+  let currentSum = 0;
+  let count = 0;
+
+  for (const val of arr) {
+    currentSum += val;
+    const diff = currentSum - target;
+
+    if (prefixSums.has(diff)) {
+      count += prefixSums.get(diff);
+    }
+
+    if (prefixSums.has(currentSum)) {
+      prefixSums.set(currentSum, prefixSums.get(currentSum) + 1);
+    } else {
+      prefixSums.set(currentSum, 1);
+    }
+  }
+
+  return count;
+}
+
+console.log(subarraySumTotal([1, 2, 3], 3));
+console.log(subarraySumTotal([1, 2, 3], 3));
