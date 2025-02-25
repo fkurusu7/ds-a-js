@@ -53,7 +53,7 @@ function hasCycle(elel) {
  the distance between them constantly reduces until they meet, in which case we know there is a cycle. 
  However, if there is no cycle, they will never meet because the speed of the hare is always faster.
  */
-console.log(hasCycle(rootNoCycle)); // false
+console.log(hasCycle(rootNoCycle)); // ==> false
 console.log(hasCycle(rootCycle)); // ==> true
 
 /* 
@@ -72,3 +72,29 @@ Node {
   }
 }
 */
+
+function hasCycleLL(head) {
+  // if list is empty or has only one node, it cannot have a cycle
+  if (!head || !head.next) return false;
+
+  // Initialize two pointers
+  let slow = head;
+  let fast = head;
+
+  // Traverse the list until find a cycle or reach the end
+  while (fast && fast.next) {
+    // move slow pointer one step
+    slow = slow.next;
+
+    // move fast pointer two steps
+    fast = fast.next.next;
+
+    // if slow and fast pointers meet, there is a cycle
+    if (slow === fast) return true;
+  }
+
+  return false;
+}
+console.log(hasCycleLL(new Node(2))); // ==> false
+console.log(hasCycleLL(rootNoCycle)); // ==> false
+console.log(hasCycleLL(rootCycle)); // ==> true
