@@ -29,3 +29,14 @@ function dfsPrettyPrint(node, indentLevel) {
 }
 
 dfsPrettyPrint(rootNode, indentPerLevel);
+
+/* 
+    1
+      2
+        3
+        4
+      3
+        4
+        5
+          8
+*/

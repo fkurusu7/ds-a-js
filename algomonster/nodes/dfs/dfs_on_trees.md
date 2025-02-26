@@ -40,10 +40,94 @@ function factorialStack(n) {
   while (stack.length > 0) {
     res *= stack.pop();
   }
+
   return res;
 }
 
 factorialStack(5); // 120
+```
+
+## TREES
+
+A tree is a type of graph Data Structure composed of nodes and edges. It's main properties are:
+
+1. It is acyclic
+2. There exists a path between the root to any node
+3. Has "N - 1" edges, N is the number of nodes in the tree
+4. Each node has exactly one parent node, except the ROOT Node
+
+### Definitions:
+
+- **Internal node**: every node in a tree that has at least one child node.
+- **Leaf node**: every node in a tree that has no child nodes.
+- **Ancestor**: all the nodes that are between the path from the root to the current node are the
+  ancestors of the current node. An ancestor node of the current node is either the parent of the
+  current node or the parent of another ancestor of the node.
+- **Descendent**: all the nodes that are reachable from the current node when moving down the tree
+  are the descendants of the current node. A descendant of the current node is either a child of
+  the node or a child of another descendant of the node.
+- **Level**: the number of ancestors from the node to the root nodes.
+
+## Binary Tree
+
+An n-ary tree is a tree in which each node has no more than n children.
+A binary tree is a type of n-nary tree with n = 2, so every node in a binary tree has 0 to 2 children.
+
+## Tree Traversal
+
+```js
+class Node {
+  constructor(val, left = null, right = null) {
+    this.val = val;
+    this.left = left;
+    this.right = right;
+  }
+}
+const root = new Node(1);
+root.left = new Node(2);
+root.left.left = new Node(3);
+root.left.right = new Node(4);
+root.right = new Node(5);
+root.right = new Node(5);
+```
+
+1. In-Order Traversal.- visits the left branch first, then the current node, and finally the right branch.
+
+```js
+function inOrderTraversal(head) {
+  if (head !== null) {
+    inOrderTraversal(head.left);
+    console.log(head.val);
+    inOrderTraversal(head.right);
+  }
+}
+inOrderTraversal(root); // => 3 2 4 1 5
+```
+
+2. Pre-Order Traversal.- visits the current node first, then the left subtree, and finally the right subtree.
+
+```js
+function preOrderTraversal(head) {
+  if (head !== null) {
+    console.log(head.val);
+    preOrderTraversal(head.left);
+    preOrderTraversal(head.right);
+  }
+}
+preOrderTraversal(root); // => 1 2 3 4 5
+```
+
+3. Post-Order Traversal.- visits the left subtree first, then the right subtree, and finally the current node.
+
+```js
+function postOrderTraversal(head) {
+  if (head !== null) {
+    postOrderTraversal(head.left);
+    postOrderTraversal(head.right);
+    console.log(head.val);
+  }
+}
+postOrderTraversal(root); //=> 3 4 2 5 1
 ```
 
 ## Think like a NODE
@@ -74,16 +158,44 @@ function dfs(node, state){
 }
 ```
 
+**DFS is a bold SEARCH** in other words DFS is **PRE-ORDER Traversal**.
+
+```js
+function searchValueInTree(head, target) {
+  if (head === null) return null;
+
+  if (head.val === target) return head;
+
+  // return non-null value from recursive calls
+
+  const left = searchValueInTree(head.left, target);
+  if (left !== null) return left;
+
+  // left is null at this point, right could be null or non-null
+  // return right child's directly
+  const right = searchValueInTree(head.right, target);
+  return right;
+}
+console.log(searchValueInTree(root, 6)); // => null
+console.log(searchValueInTree(root, 2));
+/* Node {
+  val: 2,
+  left: Node { val: 3, left: null, right: null },
+  right: Node { val: 4, left: null, right: null }
+} */
+```
+
 ## Defining the Recursive function
 
 Two things to define the function:
 
 1. RETURN VALUE (passing value up from child to parent)
    1.1 What do to return after visiting a node?
+   R: Use the return value to pass information from children to parent.
 
 2. Identify state(s) (passing value down from parent to child)
    2.1 What states do we need to maintain to compute the return value for the current node?
-   2.2 State becomes DFS's function arguments. Use states to pass information from parent to children.
+   R: State becomes DFS's function arguments. Use states to pass information from parent to children.
 
 ## Simple Example - "Pretty-print" a Tree
 
@@ -118,6 +230,15 @@ function dfsPrettyPrint(node, indentLevel) {
 }
 
 dfsPrettyPrint(rootNode, indentPerLevel);
+/* 
+    1
+      2
+        3
+        4
+      3
+        4
+        5
+*/
 ```
 
 ## Harder example (2 answers) - Finding the Maximum value in a binary tree
