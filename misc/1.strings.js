@@ -148,3 +148,68 @@ function compressString(str) {
 
 console.log(compressString("aaabbc")); // "a3b2c1"
 console.log(compressString("abcdef")); // "abcdef" (no compression)
+
+function groupAnagrams(anagrams) {
+  const map = new Map();
+
+  for (let i = 0; i < anagrams.length; i++) {
+    const sortAnagram = anagrams[i].split("").sort().join("");
+    if (!map.get(sortAnagram)) {
+      map.set(sortAnagram, []);
+    }
+    map.get(sortAnagram).push(anagrams[i]);
+  }
+
+  return Array.from(map.values());
+}
+
+console.log(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]));
+
+// SLIDING WINDOW
+function lengthOfLongestSubstring(str) {
+  let letterMap = new Map();
+  let maxLength = 0;
+  let left = 0;
+
+  for (let right = 0; right < str.length; right++) {
+    if (letterMap.has(str[right])) {
+      left = Math.max(letterMap.get(str[right]) + 1, left);
+    }
+    letterMap.set(str[right], right);
+    maxLength = Math.max(maxLength, right - left + 1);
+  }
+
+  return maxLength;
+}
+console.log(lengthOfLongestSubstring("abcabcbb")); // 3 ("abc")
+console.log(lengthOfLongestSubstring("bbbbb")); // 1 ("b")
+
+function longestSubstringWithoutRepeatingCharacters(str) {
+  let windowFreq = new Map();
+  let left = 0;
+  let maxLength = 0;
+
+  for (let right = 0; right < str.length; right++) {
+    // add current char
+    const char = str[right];
+    windowFreq.set(char, (windowFreq.get(char) || 0) + 1);
+
+    // shrink the window until window contains no characters
+    while (windowFreq.get(char) > 1) {
+      const leftChar = str[left];
+      windowFreq.set(leftChar, windowFreq.get(leftChar) - 1);
+
+      if (windowFreq.get(leftChar) === 0) windowFreq.delete(leftChar);
+
+      left++;
+    }
+
+    // calculate maxLength
+    maxLength = Math.max(maxLength, right - left + 1);
+  }
+
+  return maxLength;
+}
+
+console.log(longestSubstringWithoutRepeatingCharacters("abcabcbb")); // 3 ("abc")
+console.log(longestSubstringWithoutRepeatingCharacters("bbbbb")); // 1 ("b")
