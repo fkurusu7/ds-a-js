@@ -119,3 +119,44 @@ console.log(minStack.printStack());
 console.log(minStack.printMinStack());
 console.log(minStack.peek()); // Returns 0
 console.log(minStack.getMin()); // Returns -2
+
+/** Daily Temperatures
+  
+  Given an array temperatures representing daily temperatures, return an array answer 
+  such that answer[i] is the number of days until a warmer temperature appears. 
+  If there’s no future warmer day, set answer[i] = 0.
+
+  Example:
+    Input: [73, 74, 75, 71, 69, 72, 76, 73]
+    Output: [1, 1, 4, 2, 1, 1, 0, 0]
+  
+  Hints: 
+    ✅ Iterate the array in reverse to track future temperatures.
+    ✅ Use a stack to track indices of temperatures.
+    ✅ Pop from the stack if the current temperature is warmer than the one at the top.
+*/
+
+function dailyTemperatures(temperatures) {
+  const n = temperatures.length;
+  const result = Array(n).fill(0);
+  const indexStack = []; // Stack will store indeces
+
+  for (let i = 0; i < n; i++) {
+    // While stack is not empty and current temperature is warmer than the temperature at the top of the stack
+    while (
+      indexStack.length > 0 &&
+      temperatures[i] > temperatures[indexStack[indexStack.length - 1]]
+    ) {
+      const prevIndex = indexStack.pop();
+      // Calculate days until warmer temperature
+      result[prevIndex] = i - prevIndex;
+    }
+
+    // Push current day's index to stack
+    indexStack.push(i);
+  }
+
+  return result;
+}
+
+console.log(dailyTemperatures([73, 74, 75, 71, 69, 72, 76, 73]));
