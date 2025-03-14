@@ -164,6 +164,7 @@ function groupAnagrams(anagrams) {
 }
 
 console.log(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]));
+// [ [ 'eat', 'tea', 'ate' ], [ 'tan', 'nat' ], [ 'bat' ] ]
 
 // SLIDING WINDOW
 function lengthOfLongestSubstring(str) {
