@@ -111,14 +111,14 @@ const minStack = new MinStack();
 minStack.push(-2);
 minStack.push(0);
 minStack.push(-3);
-console.log(minStack.printStack());
-console.log(minStack.printMinStack());
-console.log(minStack.getMin()); // Returns -3
-console.log(minStack.pop());
-console.log(minStack.printStack());
-console.log(minStack.printMinStack());
-console.log(minStack.peek()); // Returns 0
-console.log(minStack.getMin()); // Returns -2
+console.log(minStack.printStack()); // '-2 => 0 => -3'
+console.log(minStack.printMinStack()); // '-2 => -3'
+console.log(minStack.getMin()); // -3
+console.log(minStack.pop()); // -3
+console.log(minStack.printStack()); // '-2 => 0'
+console.log(minStack.printMinStack()); // -2
+console.log(minStack.peek()); // 0
+console.log(minStack.getMin()); // -2
 
 /** Daily Temperatures
   
