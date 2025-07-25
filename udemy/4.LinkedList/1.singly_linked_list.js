@@ -42,8 +42,8 @@ class SinglyLinkedList {
       this.tail.next = newListNode;
       this.tail = newListNode;
     }
-    this.length++;
 
+    this.length++;
     return this;
   }
 
@@ -91,10 +91,10 @@ class SinglyLinkedList {
       this.head = newHead;
     }
     this.length++;
-    return this.head;
+    return this;
   }
 
-  /** Retries a node by its position.
+  /** Retrieves a node by its position.
    * Indexing starts at 0
    * @returns SinglyListNode
    */
@@ -112,15 +112,56 @@ class SinglyLinkedList {
     return current;
   }
 
-  set(index) {
-    if (index < 0 || index >= this.length) return null;
+  /**
+   * Changes the value of a node based on its position
+   * @param {*} value
+   * @param {number} index
+   * @returns {boolean}
+   */
+  set(value, index) {
+    const foundNode = this.get(index);
+    if (foundNode) {
+      foundNode.val = value;
+      return true;
+    }
 
+    return false;
+  }
+
+  /**
+   * Adds a node at a specific position
+   * @param {any} value
+   * @param {number} index
+   */
+  insert(value, index) {
+    console.log(this.length, index, value);
+    if (index < 0 || index >= this.length) return false;
+
+    // if index is the same as the length push a new node
+    if (index === this.length) return !!this.push(value);
+
+    // if index is equal to 0, unshift a new node
+    if (index === 0) return !!this.unshift(value);
+
+    const prev = this.get(index - 1);
+    const newNode = new SinglyListNode(value);
+
+    newNode.next = prev.next;
+    prev.next = newNode;
+    this.length++;
+    return true;
+  }
+
+  print() {
     let current = this.head;
-    let currentIndex = 0;
+    const listValues = [];
 
-    while (currentIndex <= index) {}
+    while (current) {
+      listValues.push(current.val);
+      current = current.next;
+    }
 
-    return this.head;
+    return listValues.join(' -> ');
   }
 }
 
@@ -130,17 +171,36 @@ list.push('there');
 list.push('little');
 list.push('mermaid');
 
-console.log(list);
-// console.log(list.pop());
-// console.log(list.pop());
-// console.log(list);
-// console.log(list.shift());
-// console.log(list);
-// console.log(list.push('opopop'));
-// console.log(list.unshift('Ups!'));
-// console.log(list);
-
+console.log(list.print()); // 'hi -> there -> little -> mermaid'
 console.log(list.get(2)); // ==> Node.value === little
 console.log(list.get(1)); // ==> Node.value === there
 console.log(list.get(10)); // ==> null
 console.log(list.get(-1)); // ==> null
+
+/* 
+SinglyLinkedList {
+  head: SinglyListNode {
+    val: 'hi',
+    next: SinglyListNode {
+      val: 'there',
+*/
+// console.log(list.set('Hola', 0));
+/* 
+SinglyListNode {
+  val: 'Hola',
+  next: SinglyListNode {
+    val: 'hi',
+    next: SinglyListNode {
+      val: 'there',
+      */
+
+console.log(list.unshift('holaa'));
+console.log(list.print()); // 'holaa -> hi -> there -> little -> mermaid'
+console.log(list.set('beben', 2));
+console.log(list.print()); // 'holaa -> hi -> beben -> little -> mermaid'
+
+console.log(list.insert('insertaaado', 6)); // false
+console.log(list.insert('insertaaado', 3)); // true
+console.log(list.insert('at the end', 6)); // true
+console.log(list.insert('at the beginning', 0)); // true
+console.log(list.print()); // 'holaa -> hi -> beben -> insertaaado -> little -> mermaid'
